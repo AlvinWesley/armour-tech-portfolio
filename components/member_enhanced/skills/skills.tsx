@@ -39,7 +39,7 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 py-16 px-4 md:px-8 relative">
+    <section id="skills" className="min-h-screen bg-white py-16 px-4 md:px-8 relative text-black ">
       {/* Navigation Buttons */}
       <NavigationButtons />
 
@@ -51,10 +51,10 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Technical <span className="text-amber-400">Skills</span>
           </h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-700 text-lg max-w-2xl mx-auto">
             A collection of technologies and tools I work with
           </p>
         </motion.div>
@@ -67,13 +67,13 @@ export default function Skills() {
           className="max-w-md mx-auto mb-12"
         >
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-700 w-5 h-5" />
             <input
               type="text"
               placeholder="Search skills..."
               value={searchTerm}
               onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-400 transition-colors"
+              className="w-full pl-10 pr-4 py-3 bg-white/10 border border-gray-600 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:border-amber-400 transition-colors"
             />
           </div>
         </motion.div>

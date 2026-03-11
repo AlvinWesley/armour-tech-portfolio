@@ -2,6 +2,7 @@
 export interface Certificate {
   id: string;
   cert_name: string;
+  owner_id:string;
   cert_description: string;
   cert_provider: string;
   issue_date: string;

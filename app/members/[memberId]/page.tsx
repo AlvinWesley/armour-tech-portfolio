@@ -18,46 +18,34 @@ export default function MemberPortfolio() {
         <HeroSection />
       </section>
 
-      <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      </div>
+    
 
       <section id="skills">
         <Skills />
       </section>
 
-      <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      </div>
+    
 
       <section id="projects">
         <ProjectsSection />
       </section>
 
-      <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      </div>
+     
 
       <section id="certificates">
         <CertificatesSection />
       </section>
-       <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      </div>
+  
 
       <section id="experience">
         <WorkExperienceSection />
       </section>
-      <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      </div>
+    
 
       <section id="documents">
         <DocumentsSection />
       </section>
-      <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-      </div>
+ 
 
       <section id="contact">
         <ContactSection />

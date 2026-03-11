@@ -29,7 +29,7 @@ export default function SkillsCard({ skillName, description, index }: SkillsCard
         transition: { type: "spring", stiffness: 400, damping: 17 }
       }}
       style={{ rotate: `${rotation}deg` }}
-      className="bg-gradient-to-br from-amber-50 to-yellow-100 p-5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-200/50 relative overflow-hidden group"
+      className="bg-linear-to-br from-amber-400 to-amber-50 p-5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-200/50 relative overflow-hidden group"
     >
       {/* Sticky note corner fold effect */}
       <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-amber-300/20 to-transparent rounded-bl-2xl" />
@@ -44,7 +44,7 @@ export default function SkillsCard({ skillName, description, index }: SkillsCard
       </motion.div>
 
       <div className="space-y-3">
-        <h3 className="text-xl font-bold text-gray-800 border-b-2 border-amber-300/50 pb-2">
+        <h3 className="text-xl font-bold text-gray-800 border-b-2 border-gray-800 pb-2">
           {skillName}
         </h3>
         <p className="text-sm text-gray-600 leading-relaxed">

@@ -7,6 +7,7 @@ export interface Document {
   id: string;
   document_name: string;
   description?: string;
+  owner_id:string;
   file_name: string;
   file_size: number; // in bytes
   file_type: string;
