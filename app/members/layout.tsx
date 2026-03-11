@@ -1,4 +1,3 @@
-import { StickyHeader } from "@/components/member_enhanced/StickyHeader";
 
 export default function MemberLayout({
   children,
@@ -7,7 +6,6 @@ export default function MemberLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <StickyHeader />
       <main className="flex-1">{children}</main>
     </div>
   );
