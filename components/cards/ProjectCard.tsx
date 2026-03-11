@@ -24,7 +24,7 @@ export function ProjectCard({
       transition={{ duration: 0.4 }}
       whileHover={{ y: -8 }}
     >
-      <Link href={`/home/projects/${project.id}`}>
+      <Link href={`#`}>
         <div className="group overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-lg cursor-pointer">
           {/* Image Container */}
           <div className="relative h-48 w-full overflow-hidden bg-muted">

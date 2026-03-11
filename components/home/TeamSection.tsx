@@ -50,7 +50,7 @@ export function TeamSection({ members }: TeamSectionProps) {
             </p>
           </div>
           <Link
-            href="/home/members"
+            href="#"
             className="hidden text-sm font-medium text-primary transition-colors duration-300 hover:text-primary/80 md:block"
           >
             View All
@@ -81,8 +81,8 @@ export function TeamSection({ members }: TeamSectionProps) {
           className="mt-8 flex justify-center md:hidden"
         >
           <Link
-            href="/home/members"
-            className="inline-flex h-10 items-center gap-2 rounded-lg border border-border px-4 font-medium text-foreground transition-all duration-300 hover:bg-muted"
+            href="#"
+            className="hidden text-sm font-medium text-primary transition-colors duration-300 hover:text-primary/80 md:block"
           >
             View All Members
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
