@@ -298,6 +298,7 @@ CREATE TABLE IF NOT EXISTS MemberWorkExperience (
     member_id UUID NOT NULL REFERENCES Member(id) ON DELETE CASCADE,
     work_description TEXT,
     company_name TEXT NOT NULL,
+    company_logo_url TEXT DEFAULT "/logo.png"
     date_started DATE NOT NULL CHECK(date_started <= CURRENT_DATE),
     date_completed DATE CHECK(date_completed >= date_started),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -455,3 +456,59 @@ CREATE TABLE IF NOT EXISTS ServiceRequest (
 CREATE INDEX idx_servicerequest_service_id ON ServiceRequest(service_id);
 CREATE INDEX idx_servicerequest_customer_id ON ServiceRequest(customer_id);
 CREATE INDEX idx_servicerequest_req_ref_code ON ServiceRequest(req_ref_code);
+CREATE TABLE IF NOT EXISTS WorkExperienceArchievements(
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+arch_name TEXT NOT NULL,
+arch_description TEXT,
+work_exp_id UUID REFERENCES MemberWorkExperience(id)  ON DELETE SET NULL,
+created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+UNIQUE(arch_name,work_exp_id)
+);
+CREATE INDEX idx_key_arch_work_exp_id ON WorkExperienceArchievements(work_exp_id);
+CREATE TABLE IF NOT EXISTS WorkExperienceTechnologies(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tech_temp_id UUID NOT NULL REFERENCES TechnologiesTemplate(id),
+    work_exp_id UUID NOT NULL REFERENCES MemberWorkExperience(id),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE(tech_temp_id,work_exp_id)
+);
+CREATE INDEX idx_work_tech_tech_temp_id ON WorkExperienceTechnologies(tech_temp_id);
+CREATE INDEX idx_work_tech_work_exp_id ON WorkExperienceTechnologies(work_exp_id);
+CREATE TABLE IF NOT EXISTS WorkExperienceResponsibilities(
+ id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+ resp_name TEXT NOT NULL,
+ resp_description TEXT,
+ work_exp_id UUID NOT NULL REFERENCES MemberWorkExperience(id),
+ created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+ updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+ UNIQUE(resp_name,work_exp_id)
+);
+CREATE INDEX idx_work_resp_work_exp_id ON WorkExperienceResponsibilities(work_exp_id);
+CREATE TABLE IF NOT EXISTS WorkExperienceSkills(
+ id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+ skills_template_id UUID NOT NULL REFERENCES SkillsTemplate (id),
+ work_exp_id UUID NOT NULL REFERENCES MemberWorkExperience(id),
+ created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+ updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+ UNIQUE(skills_template_id,work_exp_id)
+);
+CREATE INDEX idx_work_skills_work_exp_id ON WorkExperienceSkills(work_exp_id);
+CREATE INDEX idx_work_skills_skills_template_id ON WorkExperienceSkills(skills_template_id);
+CREATE TABLE IF NOT EXISTS MemberCertificationTechnologies(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    member_certification_id NOT NULL REFERENCES MemberCertification(id),
+    tech_template_id UUID NOT NULL REFERENCES TechnologiesTemplate(id),
+    UNIQUE(member_certification_id,tech_template_id)
+);
+CREATE INDEX idx_member_cert_tech_member_certification_id ON MemberCertificationTechnologies(tech_template_id);
+CREATE INDEX idx_member_cert_tech_tech_template_id ON MemberCertificationTechnologies(member_certification_id);
+CREATE TABLE IF NOT EXISTS MemberCertificationSkills(
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    member_certification_id NOT NULL REFERENCES MemberCertification(id),
+    skills_template_id UUID NOT NULL REFERENCES SkillsTemplate (id),
+    UNIQUE(skills_template_id,member_certification_id)
+);
+CREATE INDEX idx_cert_skills_skills_template_id ON MemberCertificationSkills(skills_template_id);
+CREATE INDEX idx_member_cert_skills_member_certification_id ON MemberCertificationSkills(member_certification_id);

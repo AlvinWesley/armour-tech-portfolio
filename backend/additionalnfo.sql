@@ -27,4 +27,7 @@ CREATE TABLE IF NOT EXISTS WorkResponsibilities(
  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
  UNIQUE(resp_name,work_exp_id)
 );
-CREATE INDEX idx_work_resp_work_exp_id ON WorkResponsibilities(work_exp_id)
+CREATE INDEX idx_work_resp_work_exp_id ON WorkResponsibilities(work_exp_id);
+CREATE TABLE IF NOT EXISTS CertificateTechnologies(
+    
+);
