@@ -1,5 +1,10 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 
+CREATE TYPE DocumentPrivacy AS ENUM (
+    'private',
+    'public',
+    'read_only'
+);
 CREATE TYPE ServiceRequestStatus AS ENUM(
     'pending',
     'processed',
@@ -21,10 +26,23 @@ CREATE TYPE ProjectType AS ENUM (
     'web',
     'ios',
     'windows',
+    'macos',
+    'linux',
     'cross_platform',
     'command_line',
     'gaming',
-    'library'
+    'library',
+    'api',
+    'mobile',
+    'desktop',
+    'embedded',
+    'machine_learning',
+    'blockchain',
+    'iot',
+    'ar_vr',
+    'chrome_extension',
+    'firefox_addon',
+    'safari_extension'
 );
 CREATE TYPE ContactType AS ENUM (
     'facebook',
@@ -34,46 +52,166 @@ CREATE TYPE ContactType AS ENUM (
     'github',
     'whatsapp',
     'telephone',
-    'website'
+    'website',
+    'linkedin',
+    'twitter',
+    'x',
+    'telegram',
+    'signal',
+    'slack',
+    'microsoft_teams',
+    'wechat',
+    'line',
+    'snapchat',
+    'tiktok',
+    'youtube',
+    'medium',
+    'devto',
+    'hashnode',
+    'stackoverflow',
+    'gitlab',
+    'bitbucket'
 );
+
 CREATE TYPE DocumentType AS ENUM (
     'certificate',
     'resume',
-    'transcipts',
+    'cv',
+    'transcripts',
     'recommendation',
-    'thesis'
+    'thesis',
+    'dissertation',
+    'portfolio',
+    'cover_letter',
+    'identification',
+    'passport',
+    'driver_license',
+    'offer_letter',
+    'contract',
+    'nda',
+    'proposal',
+    'report',
+    'publication',
+    'research_paper',
+    'whitepaper',
+    'presentation',
+    'spreadsheet',
+    'database',
+    'source_code'
 );
-CREATE TYPE DocumentPrivacy AS ENUM (
-    'private',
-    'public',
-    'read_only'
-);
-CREATE TYPE PatnerType AS ENUM (
+CREATE TYPE PartnerType AS ENUM (
     'individual',
     'company',
+    'corporation',
     'government',
     'organization',
-    'non_govermental_organization'
+    'non_governmental_organization',
+    'non_profit',
+    'educational_institution',
+    'university',
+    'research_institute',
+    'startup',
+    'smb',
+    'enterprise',
+    'llc',
+    'partnership',
+    'sole_proprietorship',
+    'public_sector',
+    'private_sector',
+    'joint_venture',
+    'consortium',
+    'foundation',
+    'trust',
+    'cooperative'
 );
 CREATE TYPE WorkType AS ENUM (
     'freelance',
     'volunteer',
     'employment',
-    'internship'
+    'full_time',
+    'part_time',
+    'contract',
+    'internship',
+    'apprenticeship',
+    'consultant',
+    'temporary',
+    'seasonal',
+    'remote',
+    'hybrid',
+    'on_site',
+    'gig',
+    'project_based',
+    'retainer',
+    'fellowship',
+    'scholarship',
+    'research_assistant',
+    'teaching_assistant',
+    'postdoctoral',
+    'visiting_researcher'
 );
-CREATE TYPE ContactAvailability As ENUM (
+CREATE TYPE ContactAvailability AS ENUM (
     'unavailable',
     'alltime',
     'weekends',
     'weekdays',
     'monthly',
-    'annually'
+    'annually',
+    'as_needed',
+    'by_appointment',
+    'emergency_only',
+    'evenings',
+    'mornings'
 );
-CREATE TYPE ServiceType As ENUM (
+CREATE TYPE ServiceType AS ENUM (
     'app_development',
+    'web_development',
+    'mobile_development',
+    'desktop_development',
     'database_design',
+    'database_administration',
     'software_upgrade',
-    'application_design'
+    'software_migration',
+    'application_design',
+    'ui_ux_design',
+    'graphic_design',
+    'consulting',
+    'training',
+    'mentoring',
+    'technical_support',
+    'it_support',
+    'cloud_computing',
+    'devops',
+    'qa_testing',
+    'automation',
+    'cybersecurity',
+    'data_analysis',
+    'data_science',
+    'machine_learning',
+    'ai_development',
+    'blockchain_development',
+    'smart_contracts',
+    'api_integration',
+    'system_integration',
+    'legacy_modernization',
+    'code_review',
+    'performance_optimization',
+    'seo_services',
+    'digital_marketing',
+    'content_creation',
+    'technical_writing',
+    'documentation',
+    'project_management',
+    'product_management',
+    'business_analysis',
+    'system_architecture',
+    'infrastructure_planning',
+    'disaster_recovery',
+    'backup_solutions',
+    'network_design',
+    'server_maintenance',
+    'website_hosting',
+    'domain_registration',
+    'email_services'
 );
 CREATE TABLE IF NOT EXISTS Organization (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -99,7 +237,7 @@ CREATE TABLE IF NOT EXISTS Member (
     date_of_birth DATE NOT NULL CHECK(date_of_birth <= CURRENT_DATE),
     about TEXT ,
     objective TEXT ,
-    personal_statement TEXT ,
+    professional_summary TEXT ,
     member_title TEXT NOT NULL DEFAULT 'Software Engineer',
     organization_id UUID NOT NULL REFERENCES Organization(id),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -156,16 +294,16 @@ CREATE TABLE IF NOT EXISTS FooterStatement (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX idx_footerstatement_organization_id ON FooterStatement(organization_id);
-CREATE TABLE IF NOT EXISTS Patner (
+CREATE TABLE IF NOT EXISTS Partner (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    patner_name TEXT NOT NULL UNIQUE CHECK (length(patner_name)>=1),
+    partner_name TEXT NOT NULL UNIQUE CHECK (length(partner_name)>=1),
     about TEXT,
     organization_id UUID NOT NULL REFERENCES Organization(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    UNIQUE(patner_name,organization_id)
+    UNIQUE(partner_name,organization_id)
 );
-CREATE INDEX idx_patner_patner_name ON Patner(patner_name);
+CREATE INDEX idx_partner_partner_name ON Partner(partner_name);
 CREATE TABLE IF NOT EXISTS RoleTemplate (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role_name TEXT NOT NULL UNIQUE CHECK(length(role_name)>=1),
