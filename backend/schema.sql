@@ -264,6 +264,7 @@ CREATE TABLE IF NOT EXISTS CustomerProfile (
     last_name TEXT NOT NULL DEFAULT 'name',
     email TEXT UNIQUE NOT NULL CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
     other_name TEXT,
+    organization_id UUID NOT NULL REFERENCES Organization(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -417,6 +418,7 @@ CREATE INDEX idx_certificationtemplate_member_id ON CertificationTemplate(cert_n
 CREATE TABLE IF NOT EXISTS MemberCertification (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     member_id UUID NOT NULL REFERENCES Member(id) ON DELETE CASCADE,
+    document_id UUID REFERENCES MemberDocument(id) ON DELETE SET NULL,
     certification_temp_id UUID NOT NULL REFERENCES CertificationTemplate(id),
     certification_level_attained TEXT ,
     date_taken DATE NOT NULL CHECK (date_taken<=CURRENT_DATE),
@@ -436,7 +438,7 @@ CREATE TABLE IF NOT EXISTS MemberWorkExperience (
     member_id UUID NOT NULL REFERENCES Member(id) ON DELETE CASCADE,
     work_description TEXT,
     company_name TEXT NOT NULL,
-    company_logo_url TEXT DEFAULT "/logo.png"
+    company_logo_url TEXT DEFAULT "/logo.png",
     date_started DATE NOT NULL CHECK(date_started <= CURRENT_DATE),
     date_completed DATE CHECK(date_completed >= date_started),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -541,15 +543,18 @@ CREATE INDEX idx_documentdownloadrequest_req_code ON DocumentDownloadRequests(re
 
 CREATE TABLE IF NOT EXISTS Service (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid() ,
-    service_name TEXT NOT NULL UNIQUE,
+    service_name TEXT NOT NULL,
     service_description TEXT,
+    organization_id UUID NOT NULL REFERENCES Organization(id) ON DELETE CASCADE,
     photo_url TEXT,
     estimated_completion_time TEXT DEFAULT 'three months',
     service_type ServiceType DEFAULT 'app_development',
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE(service_name,organization_id)
+
 );
-CREATE INDEX idx_service_name ON Service(service_name);
+CREATE INDEX idx_service_name_org ON Service(service_name,organization_id);
 
 CREATE TABLE IF NOT EXISTS ServiceTechnology (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -636,7 +641,7 @@ CREATE INDEX idx_work_skills_work_exp_id ON WorkExperienceSkills(work_exp_id);
 CREATE INDEX idx_work_skills_skills_template_id ON WorkExperienceSkills(skills_template_id);
 CREATE TABLE IF NOT EXISTS MemberCertificationTechnologies(
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    member_certification_id NOT NULL REFERENCES MemberCertification(id),
+    member_certification_id UUID NOT NULL REFERENCES MemberCertification(id),
     tech_template_id UUID NOT NULL REFERENCES TechnologiesTemplate(id),
     UNIQUE(member_certification_id,tech_template_id)
 );
@@ -644,7 +649,7 @@ CREATE INDEX idx_member_cert_tech_member_certification_id ON MemberCertification
 CREATE INDEX idx_member_cert_tech_tech_template_id ON MemberCertificationTechnologies(member_certification_id);
 CREATE TABLE IF NOT EXISTS MemberCertificationSkills(
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    member_certification_id NOT NULL REFERENCES MemberCertification(id),
+    member_certification_id UUID NOT NULL REFERENCES MemberCertification(id),
     skills_template_id UUID NOT NULL REFERENCES SkillsTemplate (id),
     UNIQUE(skills_template_id,member_certification_id)
 );
