@@ -366,7 +366,7 @@ export interface ProjectTechnology{
     technology_id:string;
     percentage_used:number;
     project?:Project;
-    technologiesTemplate?:TechnologiesTemplate[];
+    technologiesTemplate?:TechnologiesTemplate;
 
 };
 export interface MemberTechnology{
@@ -383,6 +383,7 @@ export interface CertificationTemplate{
     cert_description?:string;
     cert_providor:string;
     site_link:string;
+    members:MemberCertification[];
 };
 export interface MemberCertification{
     id:string;
@@ -395,8 +396,9 @@ export interface MemberCertification{
     certificate_number:string;
     is_valid:boolean;
     member?:Member;
+    certificationTemplate?:CertificationTemplate;
     document?:MemberDocument;
-    technologies?:WorkExperienceTechnologies[];
+    technologies?:MemberCertificationTechnologies[];
     skills?:MemberCertificationSkills[];
 
 };
@@ -531,7 +533,7 @@ export interface CustomerContacts{
     }
     is_active:boolean;
     contactTemplate?:ContactTemplate;
-    customer?:CustomerProfile[];
+    customer?:CustomerProfile;
 };
 export interface ServiceRequests{
     id:string;
