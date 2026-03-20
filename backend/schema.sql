@@ -520,6 +520,7 @@ CREATE TABLE IF NOT EXISTS ProjectTeamRole (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     project_team_member_id UUID NOT NULL REFERENCES ProjectTeamMember(id) ON DELETE CASCADE,
     role_temp_id UUID NOT NULL REFERENCES RoleTemplate(id),
+    contibution_description TEXT,
     contribution_percentage INT DEFAULT 50 CHECK (contribution_percentage >=0 AND contribution_percentage <=100),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),

@@ -268,7 +268,7 @@ export interface ContactTemplate{
     contact_type:ContactType;
     memberContacts?:MemberContact[];
     customerContacts?:CustomerContacts[];
-    organizationContacts:OrganizationContact[];
+    organizationContacts?:OrganizationContact[];
 };
 export interface SkillsTemplate{
     id:string;
@@ -383,7 +383,7 @@ export interface CertificationTemplate{
     cert_description?:string;
     cert_providor:string;
     site_link:string;
-    members:MemberCertification[];
+    members?:MemberCertification[];
 };
 export interface MemberCertification{
     id:string;
@@ -423,7 +423,6 @@ export interface MemberSkill{
     skill_template_id:string;
     skillsTemplate?:SkillsTemplate;
     member?:Member;
-    skillTemplate?:SkillsTemplate;
 
 };
 export interface MemberDocument{
@@ -448,6 +447,7 @@ export interface Documentdownload{
     document_id:string;
     download_source_ip?:string;
     device_name?:string;
+    document?:MemberDocument;
 };
 export interface PersonalProject{
     id:string;
@@ -480,6 +480,7 @@ export interface ProjectTeamRole{
     project_team_member_id:string;
     role_temp_id:string;
     contribution_percentage:number;
+    contibution_description:string;
     roleTemplate?:RoleTemplate;
     projectTeamMember?:ProjectTeamMember;
 

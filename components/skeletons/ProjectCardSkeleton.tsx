@@ -1,8 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Smartphone, Star } from 'lucide-react';
-
 interface ProjectCardSkeletonProps {
   variant?: 'default' | 'minimal' | 'detailed';
 }
